@@ -14,6 +14,14 @@
   (lambda (lzl)
     ((cdr lzl))))
 
+(define make-tree list)
+(define add-subtree cons)
+(define make-leaf (lambda (x) x))
+(define empty-tree? empty?)
+(define first-subtree car)
+(define rest-subtree cdr)
+(define leaf-data (lambda (x) x))
+(define composite-tree? list?)
 (define leaf? (lambda (x) (not (list? x))))
 
 ;; Signature: map-lzl(f, lz)
@@ -60,7 +68,7 @@
 
 ;;; Q3.2
 ; Signature: equal-trees$(tree1, tree2, succ, fail) 
-; Type: [Tree * Tree * [Tree ->T1] * [Pair->T2] -> T1 U T2
+; Type: [Tree * Tree * [Tree ->T1]] * [Pair->T2] -> T1 U T2
 ; Purpose: Determines the structure identity of a given two lists, with post-processing succ/fail
 (define equal-trees$
   (lambda (tree1 tree2 succ fail)
@@ -68,38 +76,40 @@
       ((and (leaf? tree1) (leaf? tree2))
        (succ (cons tree1 tree2)))
 
-      ((and (list? tree1) (list? tree2))
+      ((and (composite-tree? tree1) (composite-tree? tree2))
        (equal-trees$-list tree1 tree2 succ fail))
 
-      ((and (leaf? tree1) (list? tree2))
+      ((and (leaf? tree1) (composite-tree? tree2))
        (fail (cons tree1 tree2)))
 
-      ((and (list? tree1) (leaf? tree2))
+      ((and (composite-tree? tree1) (leaf? tree2))
        (fail (cons tree2 tree1)))
 
       (else
        (fail (list tree1 tree2))))))
 
 
+
 ; helper
 (define equal-trees$-list
   (lambda (lst1 lst2 succ fail)
     (cond
-      ((and (null? lst1) (null? lst2))
-       (succ '()))
+      ((and (empty-tree? lst1) (empty-tree? lst2))
+       (succ (make-tree)))
 
-      ((or (null? lst1) (null? lst2))
-       (fail (if (null? lst1) lst2 lst1)))
+      ((or (empty-tree? lst1) (empty-tree? lst2))
+       (fail (if (empty-tree? lst1) lst2 lst1)))
 
       (else
        (equal-trees$
-        (car lst1) (car lst2)
+        (first-subtree lst1) (first-subtree lst2)
         (lambda (v)
           (equal-trees$-list
-           (cdr lst1) (cdr lst2)
-           (lambda (vs) (succ (cons v vs)))
+           (rest-subtree lst1) (rest-subtree lst2)
+           (lambda (vs) (succ (add-subtree v vs)))
            fail))
         fail)))))
+
 
 
 ;;; Q4.1
