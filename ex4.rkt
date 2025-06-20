@@ -113,8 +113,6 @@
         fail)))))
 
 
-
-
 ;;; Q4.1
 ;; Signature: as-real(x)
 ;; Type: [ Number -> Lzl(Number) ]
@@ -122,9 +120,8 @@
 ;; constant real number
 (define as-real
   (lambda (x)
-    #f ;@TODO
-  )
-)
+    (cons-lzl x (lambda () (as-real x)))))
+
 
 
 ;; Signature: ++(x, y)
@@ -132,35 +129,35 @@
 ;; Purpose: Addition of real numbers
 (define ++
   (lambda (x y)
-    #f ;@TODO
-  )
-)
+    (cons-lzl (+ (head x) (head y))
+              (lambda () (++ (tail x) (tail y))))))
+
 
 ;; Signature: --(x, y)
 ;; Type: [ Lzl(Number) * Lzl(Number) -> Lzl(Number) ]
 ;; Purpose: Subtraction of real numbers
 (define --
   (lambda (x y)
-    #f ;@TODO
-  )
-)
+    (cons-lzl (- (head x) (head y))
+              (lambda () (-- (tail x) (tail y))))))
+
 
 ;; Signature: **(x, y)
 ;; Type: [ Lzl(Number) * Lzl(Number) -> Lzl(Number) ]
 ;; Purpose: Multiplication of real numbers
 (define **
   (lambda (x y)
-    #f ;@TODO
-  )
-)
+    (cons-lzl (* (head x) (head y))
+              (lambda () (** (tail x) (tail y))))))
+
 ;; Signature: //(x, y)
 ;; Type: [ Lzl(Number) * Lzl(Number) -> Lzl(Number) ]
 ;; Purpose: Division of real numbers
 (define //
   (lambda (x y)
-    #f ;@TODO
-  )
-)
+    (cons-lzl (/ (head x) (head y))
+              (lambda () (// (tail x) (tail y))))))
+
 
 ;;; Q4.2.a
 ;; Signature: sqrt-with(x y)
