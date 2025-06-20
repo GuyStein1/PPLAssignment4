@@ -89,8 +89,12 @@
        (fail (list tree1 tree2))))))
 
 
-
-; helper
+;; Signature: equal-trees$-list(lst1, lst2, succ, fail)
+;; Type: [TreeList * TreeList * [Tree -> T1] * [Tree -> T2]] -> T1 ∪ T2
+;; Purpose: Compares two lists of subtrees element-by-element using CPS.
+;;          If all pairs match in structure, returns a new tree where each leaf is a pair,
+;;          passed to the success continuation. Otherwise, calls the failure continuation
+;;          with the first mismatching subtree pair (in depth-first order).
 (define equal-trees$-list
   (lambda (lst1 lst2 succ fail)
     (cond
@@ -113,7 +117,6 @@
 
 
 ;;; Q4.1
-
 ;; Signature: as-real(x)
 ;; Type: [ Number -> Lzl(Number) ]
 ;; Purpose: Convert a rational number to its form as a
