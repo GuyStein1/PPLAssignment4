@@ -155,8 +155,12 @@
 ;; Purpose: Division of real numbers
 (define //
   (lambda (x y)
-    (cons-lzl (/ (head x) (head y))
-              (lambda () (// (tail x) (tail y))))))
+    (let ((den (head y)))
+      (if (= den 0)
+          (error "//: Division by zero")
+          (cons-lzl (/ (head x) den)
+                    (lambda () (// (tail x) (tail y))))))))
+
 
 
 ;;; Q4.2.a
