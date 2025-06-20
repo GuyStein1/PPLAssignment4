@@ -79,14 +79,12 @@
       ((and (composite-tree? tree1) (composite-tree? tree2))
        (equal-trees$-list tree1 tree2 succ fail))
 
-      ((and (leaf? tree1) (composite-tree? tree2))
-       (fail (cons tree1 tree2)))
-
-      ((and (composite-tree? tree1) (leaf? tree2))
-       (fail (cons tree2 tree1)))
+      ((or (leaf? tree1) (leaf? tree2)) 
+       (fail (cons tree1 tree2)))       
 
       (else
        (fail (list tree1 tree2))))))
+
 
 
 ;; Signature: equal-trees$-list(lst1, lst2, succ, fail)
@@ -102,7 +100,7 @@
        (succ (make-tree)))
 
       ((or (empty-tree? lst1) (empty-tree? lst2))
-       (fail (if (empty-tree? lst1) lst2 lst1)))
+       (fail (cons lst1 lst2)))
 
       (else
        (equal-trees$
@@ -113,6 +111,7 @@
            (lambda (vs) (succ (add-subtree v vs)))
            fail))
         fail)))))
+
 
 
 
