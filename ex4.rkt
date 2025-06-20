@@ -167,9 +167,12 @@
 ;; square root of `x`
 (define sqrt-with
   (lambda (x y)
-    #f ;@TODO
-  )
-)
+    (cons-lzl y
+              (lambda ()
+                (sqrt-with x
+                           (// (++ (** y y) x)
+                               (** (as-real 2) y)))))))
+
 
 ;;; Q4.2.b
 ;; Signature: diag(lzl)
