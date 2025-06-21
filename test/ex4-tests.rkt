@@ -4,6 +4,10 @@
 
 (define id (lambda (x) x))
 
+(define integers-from
+  (lambda (n)
+    (cons-lzl n (lambda () (integers-from (+ n 1))))))
+
 ;; Q1a
 (check-equal? (append$ '(1 2) '(3 4) id) '(1 2 3 4) "incorrect append$ 1")
 (check-equal? (append$ '() '(3 4) id)  '(3 4) "incorrect append$ 2")
@@ -16,8 +20,7 @@
 (check-equal? (equal-trees$ '(1 2 (3 9)) '(1 (3 4)) id id) '(2 3 4) "incorrect equal-trees$ 4")
 (check-equal? (equal-trees$ '(1 (2) ((4 5))) '(1 (#t) ((4 5))) id id) '((1 . 1) ((2 . #t)) (((4 . 4) (5 . 5)))) "incorrect equal-trees$ 5")
 
-
-;;; Q2.1
+;;; Q2.
 (check-equal? (take (as-real 4) 8) '(4 4 4 4 4 4 4 4) "incorrect as-real 1")
 (check-equal? (take (as-real 3) 2) '(3 3) "incorrect as-real 2")
 (check-equal? (take (++ (integers-from 0) (integers-from 10)) 5) '(10 12 14 16 18) "incorrect ++ 1")
