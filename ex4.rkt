@@ -180,8 +180,8 @@
 ;; Purpose: Diagonalize an infinite lazy list
 (define diag
   (lambda (lzl)
-    #f ;@TODO
-  )
+    (cons-lzl (head (head lzl))
+              (lambda () (diag (map-lzl tail (tail lzl))))))
 )
 
 ;;; Q4.2.c
@@ -191,6 +191,5 @@
 ;; Example: (take (rsqrt (as-real 4.0)) 6) => '(4.0 2.5 2.05 2.0006097560975613 2.0000000929222947 2.000000000000002)
 (define rsqrt
   (lambda (x)
-    #f ;@TODO
-  )
-)
+    (diag (sqrt-with x x))))
+
