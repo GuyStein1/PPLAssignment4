@@ -57,20 +57,12 @@ max_list([H | T], M) :-
     less_eq(H, M).
 
 
-
-
-
-
-
-
 % Signature: author_of_genre(GenreName, AuthorName)/2
 % Purpose: true if an author by the name AuthorName has written a book belonging to the genre named GenreName.
 author_of_genre(GenreName, AuthorName) :-
     genre(GenreId, GenreName),
     author(AuthorId, AuthorName),
     book(_, AuthorId, GenreId, _).
-
-
 
 
 % Convert Church numerals to integers
